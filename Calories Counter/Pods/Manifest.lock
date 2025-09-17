@@ -1,3 +1,24 @@
-PODFILE CHECKSUM: 325d6128e418552b3238f14e97edbf099fe34534
+PODS:
+  - lottie-ios (4.5.1)
+  - MKColorPicker (1.2)
+  - MKMagneticProgress (1.4)
+
+DEPENDENCIES:
+  - lottie-ios
+  - MKColorPicker
+  - MKMagneticProgress
+
+SPEC REPOS:
+  trunk:
+    - lottie-ios
+    - MKColorPicker
+    - MKMagneticProgress
+
+SPEC CHECKSUMS:
+  lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
+  MKColorPicker: 8998b2ab977e4f240fdf254db27a18b810da3cfc
+  MKMagneticProgress: 006b8c763d62986661bcde03794a3dcf56cd084a
+
+PODFILE CHECKSUM: 5d8a02d28ec095065c2c6991077e12d8c08360c4
 
 COCOAPODS: 1.16.2

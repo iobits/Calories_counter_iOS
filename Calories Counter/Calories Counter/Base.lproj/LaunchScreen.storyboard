@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,15 +14,76 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwc-0p-UR2">
+                                <rect key="frame" x="46.666666666666657" y="59" width="300" height="300"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Daco_5872895 1_2_11zon" translatesAutoresizingMaskIntoConstraints="NO" id="NtN-e8-xrQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="NtN-e8-xrQ" firstAttribute="leading" secondItem="Jwc-0p-UR2" secondAttribute="leading" id="4LC-Xn-o5L"/>
+                                    <constraint firstItem="NtN-e8-xrQ" firstAttribute="top" secondItem="Jwc-0p-UR2" secondAttribute="top" id="ZDr-cX-81H"/>
+                                    <constraint firstAttribute="bottom" secondItem="NtN-e8-xrQ" secondAttribute="bottom" id="g28-LI-NC7"/>
+                                    <constraint firstAttribute="width" constant="300" id="gRT-TV-9sk"/>
+                                    <constraint firstAttribute="trailing" secondItem="NtN-e8-xrQ" secondAttribute="trailing" id="pZY-dd-53Q"/>
+                                    <constraint firstAttribute="height" constant="300" id="yNm-1j-Qz1"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2x9-vP-JFL">
+                                <rect key="frame" x="20" y="409" width="353" height="138.33333333333337"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epF-5C-ckd">
+                                        <rect key="frame" x="0.0" y="5" width="353" height="85"/>
+                                        <string key="text">AI Calorie
+Counter</string>
+                                        <fontDescription key="fontDescription" name="NotoSansSyriac-Regular_Bold" family="Noto Sans Syriac" pointSize="30"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Snap a photo of your meal. Let AI count the calories for you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZZ-LG-x9T">
+                                        <rect key="frame" x="0.0" y="90" width="353" height="48.333333333333343"/>
+                                        <fontDescription key="fontDescription" name="NotoSansSyriac-Regular" family="Noto Sans Syriac" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="epF-5C-ckd" firstAttribute="leading" secondItem="2x9-vP-JFL" secondAttribute="leading" id="4H1-Tm-JQ1"/>
+                                    <constraint firstItem="NZZ-LG-x9T" firstAttribute="trailing" secondItem="epF-5C-ckd" secondAttribute="trailing" id="5PI-BR-dD7"/>
+                                    <constraint firstAttribute="trailing" secondItem="epF-5C-ckd" secondAttribute="trailing" id="GaQ-O2-SAB"/>
+                                    <constraint firstItem="NZZ-LG-x9T" firstAttribute="top" secondItem="epF-5C-ckd" secondAttribute="bottom" id="JGW-q3-MV1"/>
+                                    <constraint firstItem="NZZ-LG-x9T" firstAttribute="leading" secondItem="epF-5C-ckd" secondAttribute="leading" id="iMr-5s-beS"/>
+                                    <constraint firstItem="epF-5C-ckd" firstAttribute="top" secondItem="2x9-vP-JFL" secondAttribute="top" constant="5" id="ucr-aG-ATX"/>
+                                    <constraint firstAttribute="bottom" secondItem="NZZ-LG-x9T" secondAttribute="bottom" id="wXM-pR-3cc"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2x9-vP-JFL" secondAttribute="trailing" constant="20" id="4cq-Ui-ywG"/>
+                            <constraint firstItem="2x9-vP-JFL" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" id="Ves-0R-oc1"/>
+                            <constraint firstItem="2x9-vP-JFL" firstAttribute="top" secondItem="Jwc-0p-UR2" secondAttribute="bottom" constant="50" id="t9K-4W-NBz"/>
+                            <constraint firstItem="Jwc-0p-UR2" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="z4L-eM-gda"/>
+                            <constraint firstItem="Jwc-0p-UR2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zZO-UY-j8V"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Daco_5872895 1_2_11zon" width="250" height="239"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
