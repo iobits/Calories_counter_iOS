@@ -1,24 +1,34 @@
 PODS:
+  - Charts (4.1.0):
+    - Charts/Core (= 4.1.0)
+  - Charts/Core (4.1.0):
+    - SwiftAlgorithms (~> 1.0)
   - lottie-ios (4.5.1)
   - MKColorPicker (1.2)
   - MKMagneticProgress (1.4)
+  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
+  - Charts
   - lottie-ios
   - MKColorPicker
   - MKMagneticProgress
 
 SPEC REPOS:
   trunk:
+    - Charts
     - lottie-ios
     - MKColorPicker
     - MKMagneticProgress
+    - SwiftAlgorithms
 
 SPEC CHECKSUMS:
+  Charts: ce0768268078eee0336f122c3c4ca248e4e204c5
   lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
   MKColorPicker: 8998b2ab977e4f240fdf254db27a18b810da3cfc
   MKMagneticProgress: 006b8c763d62986661bcde03794a3dcf56cd084a
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: 5d8a02d28ec095065c2c6991077e12d8c08360c4
+PODFILE CHECKSUM: 70b9a8c59327c8f45bd0488718cfe2ab50f3f76d
 
 COCOAPODS: 1.16.2

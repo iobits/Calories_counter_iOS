@@ -8,6 +8,8 @@ target 'Calories Counter' do
   pod 'lottie-ios'
   pod 'MKMagneticProgress'
   pod 'MKColorPicker'
+  pod 'Charts'
+
   # Pods for Calories Counter
 
 end

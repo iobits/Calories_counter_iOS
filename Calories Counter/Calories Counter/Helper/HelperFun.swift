@@ -17,4 +17,21 @@ class HelperFun: NSObject{
         }
     }
     
+    func selectView(from views: [UIView], selectedView: UIView, selectedHexColor: String) {
+        for view in views {
+            if view == selectedView {
+                view.layer.borderWidth = 2
+                view.layer.borderColor = UIColor.systemYellow.cgColor
+                view.layer.cornerRadius = 12
+                view.layer.masksToBounds = true
+                view.backgroundColor = UIColor(hex: selectedHexColor)
+            } else {
+                view.layer.borderWidth = 0
+                view.layer.borderColor = nil
+                view.backgroundColor = .white
+            }
+        }
+    }
+
+    
 }
