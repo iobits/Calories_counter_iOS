@@ -21,7 +21,8 @@ class WellNessCell: UICollectionViewCell{
 
 class WellNessVC: UIViewController {
 
-    
+    @IBOutlet weak var stepsView: UIView!
+    @IBOutlet weak var activityView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var waterIntakeView: UIView!
     
@@ -57,7 +58,23 @@ class WellNessVC: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        [waterIntakeView].viewsCornerRadius(15)
+        [waterIntakeView, stepsView, activityView].viewsCornerRadius(15)
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    @IBAction func addBtn(_ sender: UIButton) {
+        self.tabBarController?.tabBar.isHidden = true
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddWaterVC") as! AddWaterVC
+        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        vc.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        self.present(vc, animated: false)
+        vc.callback = { status in
+            if status{
+                self.tabBarController?.tabBar.isHidden = false
+            }
+        }
     }
 }
 

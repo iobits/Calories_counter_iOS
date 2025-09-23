@@ -12,9 +12,12 @@ class AcheivePlanVC: UIViewController {
     @IBOutlet weak var view1: UIView!
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
-    
     @IBOutlet weak var nextView: UIView!
     
+    @IBOutlet weak var lbl1: UILabel!
+    @IBOutlet weak var lbl2: UILabel!
+    @IBOutlet weak var lbl3: UILabel!
+    var plainToAchieve = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGesture()
@@ -33,11 +36,17 @@ class AcheivePlanVC: UIViewController {
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
             case 1:
-                print("👉 Male View tapped")
+                print("👉 Lose Weight")
+                self.plainToAchieve = self.lbl1.text ?? ""
+                HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view1, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
             case 2:
-                print("👉 Female View tapped")
+                print("👉 Maintain Current Weight")
+                self.plainToAchieve = self.lbl2.text ?? ""
+                HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view2, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
             case 3:
-                print("👉 Not Prefer View tapped")
+                print("👉 Gain Weight")
+                self.plainToAchieve = self.lbl3.text ?? ""
+                HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view3, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
             default:
                 print("Unknown View tapped")
             }

@@ -57,8 +57,13 @@ extension TakeYourMealVC: UITableViewDelegate, UITableViewDataSource{
         cell.mainView.layer.cornerRadius = 30
         
         if indexPath.row == selectedIndex {
+            cell.mainView.layer.borderWidth = 2
+            cell.mainView.layer.borderColor = UIColor.systemYellow.cgColor
+            cell.mainView.layer.masksToBounds = true
             cell.mainView.backgroundColor = UIColor(hex: "#FFE98B")
         } else {
+            cell.mainView.layer.borderWidth = 0   // Reset border
+            cell.mainView.layer.borderColor = nil // Reset border color
             cell.mainView.backgroundColor = .white
         }
         return cell

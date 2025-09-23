@@ -11,5 +11,6 @@ class Lotties_Constant: NSObject{
     static let shared = Lotties_Constant()
     let cam = "Camera"
     let loading = "Loading"
+    let photoCam = "Cam"
    
 }

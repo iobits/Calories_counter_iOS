@@ -15,21 +15,35 @@ class HowOldVC: UIViewController {
     let months = Calendar.current.monthSymbols // ["January", "February", ...]
     let days = Array(1...31)
     let years = Array((1900...Calendar.current.component(.year, from: Date())).reversed()) // Proper array
-    
+    var dateSt = ""
+    var healthData = FullUserHealthData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("👉 Received Gender: \(healthData.gender)")
+        
         datePickerView.delegate = self
         datePickerView.dataSource = self
         
-        // Default selection: e.g. July 31 2003
+        // Default selection: July 31 2003
         if let monthIndex = months.firstIndex(of: "July") {
             datePickerView.selectRow(monthIndex, inComponent: 0, animated: false)
         }
         datePickerView.selectRow(30, inComponent: 1, animated: false) // 31
-        datePickerView.selectRow( years.firstIndex(of: 2003) ?? 0, inComponent: 2, animated: false)
+        datePickerView.selectRow(years.firstIndex(of: 2003) ?? 0, inComponent: 2, animated: false)
+        
+        // 👇 Get default selected values immediately
+        let month = months[datePickerView.selectedRow(inComponent: 0)]
+        let day = days[datePickerView.selectedRow(inComponent: 1)]
+        let year = years[datePickerView.selectedRow(inComponent: 2)]
+        dateSt = "\(month) \(day) \(year)"
+        print("👉 Default Selected: \(dateSt)")
+        
         tapGesture()
     }
+
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         nextView.layer.cornerRadius = 25.0
@@ -44,6 +58,8 @@ class HowOldVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "BeforeCalriesVC") as! BeforeCalriesVC
                 vc.modalPresentationStyle = .fullScreen
+                self.healthData.birthDate = self.dateSt
+                vc.healthData = self.healthData
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")
@@ -54,34 +70,35 @@ class HowOldVC: UIViewController {
 }
 extension HowOldVC: UIPickerViewDelegate, UIPickerViewDataSource{
     // MARK: - Picker DataSource
-        func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            return 3 // Month, Day, Year
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 3 // Month, Day, Year
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0: return months.count
+        case 1: return days.count
+        case 2: return years.count
+        default: return 0
         }
+    }
+    
+    // MARK: - Picker Delegate
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0: return months[row]
+        case 1: return "\(days[row])"
+        case 2: return "\(years[row])"
+        default: return nil
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let month = months[datePickerView.selectedRow(inComponent: 0)]
+        let day = days[datePickerView.selectedRow(inComponent: 1)]
+        let year = years[datePickerView.selectedRow(inComponent: 2)]
         
-        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            switch component {
-            case 0: return months.count
-            case 1: return days.count
-            case 2: return years.count
-            default: return 0
-            }
-        }
-        
-        // MARK: - Picker Delegate
-        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            switch component {
-            case 0: return months[row]
-            case 1: return "\(days[row])"
-            case 2: return "\(years[row])"
-            default: return nil
-            }
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-            let month = months[datePickerView.selectedRow(inComponent: 0)]
-            let day = days[datePickerView.selectedRow(inComponent: 1)]
-            let year = years[datePickerView.selectedRow(inComponent: 2)]
-            
-            print("👉 Selected: \(month) \(day), \(year)")
-        }
+        print("👉 Selected: \(month) \(day) \(year)")
+        dateSt = "\(month) \(day) \(year)"
+    }
 }

@@ -71,3 +71,55 @@ extension UIColor {
     }
 }
 
+extension UIViewController {
+    func showToast(message: String, duration: Double = 2.0) {
+        // Create the toast label
+        let toastLabel = UILabel()
+        toastLabel.text = message
+        toastLabel.textColor = .white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 14)
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        toastLabel.numberOfLines = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        
+        // Set the label's frame and position
+        let maxWidthPercentage: CGFloat = 0.8 // 80% of screen width
+        let maxMessageSize = CGSize(width: self.view.frame.size.width * maxWidthPercentage, height: self.view.frame.size.height)
+        let expectedSize = toastLabel.sizeThatFits(maxMessageSize)
+        let labelWidth = min(maxMessageSize.width, expectedSize.width + 20)
+        let labelHeight = min(maxMessageSize.height, expectedSize.height + 10)
+        
+        toastLabel.frame = CGRect(x: (self.view.frame.size.width - labelWidth) / 2,
+                                  y: self.view.frame.size.height - 100,
+                                  width: labelWidth,
+                                  height: labelHeight)
+        
+        // Add the label to the view
+        self.view.addSubview(toastLabel)
+        
+        // Animate the toast message
+        UIView.animate(withDuration: 0.5, delay: duration, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }) { _ in
+            toastLabel.removeFromSuperview()
+        }
+    }
+}
+
+
+
+extension UIViewController {
+    func showAlert(title: String, message: String, okHandler: (() -> Void)? = nil) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            okHandler?()   // 👉 jab OK click hoga to yeh closure call hoga
+        }
+        
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+}

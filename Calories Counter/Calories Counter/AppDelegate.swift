@@ -7,19 +7,13 @@
 
 import UIKit
 import CoreData
+import IQKeyboardManager
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        if let tabBar = UITabBar.appearance() as? UITabBar {
-            tabBar.isTranslucent = false
-            tabBar.backgroundColor = .white   // ya apna desired color
-        }
-
+        IQKeyboardManager.shared().isEnabled = true
         return true
     }
 

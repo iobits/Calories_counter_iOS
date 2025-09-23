@@ -15,6 +15,11 @@ class DoEatOutVC: UIViewController {
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
     
+    
+    @IBOutlet weak var lbl1: UILabel!
+    @IBOutlet weak var lbl2: UILabel!
+    @IBOutlet weak var lbl3: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGesture()
@@ -24,13 +29,20 @@ class DoEatOutVC: UIViewController {
         [nextView, view1, view2, view3].viewsCornerRadius(25)
     }
     func tapGesture() {
-        [nextView].addTapGesture { index, tappedView in
+        [nextView, view1, view2, view3].addTapGesture { index, tappedView in
             switch index {
             case 0:
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "CalzNotificationVC") as! CalzNotificationVC
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
+            case 1:
+                HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view1, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
+            case 2:
+                
+                HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view2, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
+            case 3:
+                HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view3, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
             default:
                 print("Unknown View tapped")
             }

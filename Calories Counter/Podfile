@@ -9,6 +9,7 @@ target 'Calories Counter' do
   pod 'MKMagneticProgress'
   pod 'MKColorPicker'
   pod 'Charts'
+  pod 'IQKeyboardManager'
 
   # Pods for Calories Counter
 

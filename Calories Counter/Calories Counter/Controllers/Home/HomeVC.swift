@@ -54,6 +54,7 @@ class HomeVC: UIViewController {
     @IBOutlet weak var snacksView: UIView!
     @IBOutlet weak var dinnerView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var viewAll: UIView!
     
     private let viewModel = HomeViewModel()
     private let remainingLabel = UILabel()
@@ -88,6 +89,14 @@ class HomeVC: UIViewController {
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
     }
+    
+    @IBAction func camBtn(_ sender: UIButton) {
+        print("cam click")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "CamVC") as! CamVC
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: false)
+    }
+    
     
     func loadProgressViewData(){
         // Progress setup
@@ -158,13 +167,20 @@ class HomeVC: UIViewController {
         present(alert, animated: true)
     }
     func profileNav() {
-        [profileView].addTapGesture { index, tappedView in
+        [profileView, viewAll].addTapGesture { index, tappedView in
             switch index {
             case 0:
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProfileVC") as! ProfileVC
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
+            case 1:
+                print("view all")
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyMealsVC") as! MyMealsVC
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: false)
+                
             default:
                 print("Unknown View tapped")
             }

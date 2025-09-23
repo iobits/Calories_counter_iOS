@@ -9,10 +9,7 @@ import UIKit
 
 class LastbiteVC: UIViewController {
 
-    
-    
     @IBOutlet weak var mainView: UIView!
-    
     @IBOutlet weak var datePickerView: UIPickerView!
     @IBOutlet weak var startFastView: UIView!
     @IBOutlet weak var cancelView: UIView!
