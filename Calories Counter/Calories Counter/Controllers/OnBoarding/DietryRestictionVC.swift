@@ -10,6 +10,7 @@ import UIKit
 class DietryRestictionCell: UITableViewCell{
     
     @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var titleLbl: UILabel!
 }
 
 class DietryRestictionVC: UIViewController {
@@ -17,8 +18,10 @@ class DietryRestictionVC: UIViewController {
     
     @IBOutlet weak var nextView: UIView!
     @IBOutlet weak var tblView: UITableView!
-    
+    var arr = ["Lactose Free", "Sugar Free", "Gluten Free", "Nut Free", "None"]
     var selectedIndex: Int = 0
+    var healthData = FullUserHealthData()
+    var dietaryRestrictionsStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         tblView.delegate = self
@@ -26,17 +29,26 @@ class DietryRestictionVC: UIViewController {
         tblView.separatorStyle = .none
         tblView.showsVerticalScrollIndicator = false
         tapGesture()
+        dietaryRestrictionsStr = arr[0]
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         nextView.layer.cornerRadius = 25.0
     }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func tapGesture() {
         [nextView].addTapGesture { index, tappedView in
             switch index {
             case 0:
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "MealADayVC") as! MealADayVC
+                
+                UserDefaults.standard.set(self.dietaryRestrictionsStr, forKey: DefaultKeys.shared.dietaryRestrictions)
+                UserDefaults.standard.synchronize()
+                
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
             default:
@@ -48,7 +60,7 @@ class DietryRestictionVC: UIViewController {
 
 extension DietryRestictionVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return arr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,6 +68,7 @@ extension DietryRestictionVC: UITableViewDelegate, UITableViewDataSource{
         // Set background based on selected index
         cell.selectionStyle = .none
         cell.mainView.layer.cornerRadius = 25
+        cell.titleLbl.text = arr[indexPath.row]
         if indexPath.row == selectedIndex {
             cell.mainView.layer.borderWidth = 2
             cell.mainView.layer.borderColor = UIColor.systemYellow.cgColor
@@ -71,6 +84,7 @@ extension DietryRestictionVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        dietaryRestrictionsStr = arr[indexPath.row]
         tableView.reloadData() // Refresh table to update colors
     }
     

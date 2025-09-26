@@ -20,6 +20,7 @@ class YourGoalsVC: UIViewController {
     @IBOutlet weak var nextView: UIView!
     
     var selectedIndex: Int = 0
+    var motivationStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         goalTblView.delegate = self
@@ -27,10 +28,14 @@ class YourGoalsVC: UIViewController {
         goalTblView.separatorColor = .clear
         goalTblView.showsVerticalScrollIndicator = false
         tapGesture()
+        motivationStr = Constant.shared.motivateArr[0].titleSt
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         nextView.layer.cornerRadius = 25
+    }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     func tapGesture() {
         [nextView].addTapGesture { index, tappedView in
@@ -39,6 +44,8 @@ class YourGoalsVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "ReachingGoalsVC") as! ReachingGoalsVC
                 vc.modalPresentationStyle = .fullScreen
+                UserDefaults.standard.set(self.motivationStr, forKey: DefaultKeys.shared.motivation)
+                UserDefaults.standard.synchronize()
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")
@@ -78,7 +85,9 @@ extension YourGoalsVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        let data = Constant.shared.motivateArr[indexPath.row]
         tableView.reloadData() // Refresh table to update colors
+        motivationStr = data.titleSt
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

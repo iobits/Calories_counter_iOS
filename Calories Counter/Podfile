@@ -10,6 +10,7 @@ target 'Calories Counter' do
   pod 'MKColorPicker'
   pod 'Charts'
   pod 'IQKeyboardManager'
+  pod 'TOCropViewController'
 
   # Pods for Calories Counter
 

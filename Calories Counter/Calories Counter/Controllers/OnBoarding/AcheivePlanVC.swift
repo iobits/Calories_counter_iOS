@@ -21,10 +21,15 @@ class AcheivePlanVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGesture()
+        self.plainToAchieve = self.lbl3.text ?? ""
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        [nextView, view1, view2, view3].viewsCornerRadius(25)
+        [nextView].viewsCornerRadius(25)
+        HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view3, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
+    }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
     func tapGesture() {
@@ -34,6 +39,8 @@ class AcheivePlanVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "YourUnitVC") as! YourUnitVC
                 vc.modalPresentationStyle = .fullScreen
+                UserDefaults.standard.set(self.plainToAchieve, forKey: DefaultKeys.shared.goal)
+                UserDefaults.standard.synchronize()
                 self.present(vc, animated: false)
             case 1:
                 print("👉 Lose Weight")

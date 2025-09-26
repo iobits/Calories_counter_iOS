@@ -19,18 +19,25 @@ class LifeStyleLikeVC: UIViewController {
 
     @IBOutlet weak var nextView: UIView!
     @IBOutlet weak var tblView: UITableView!
-    
     var selectedIndex: Int = 0
+    var lifestyleSt = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tblView.separatorColor = .clear
         tblView.showsVerticalScrollIndicator = false
         tapGesture()
+        let data = Constant.shared.LikeArr[0]
+        lifestyleSt = data.titleSt
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         nextView.layer.cornerRadius = 25
+    }
+    
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     func tapGesture() {
         [nextView].addTapGesture { index, tappedView in
@@ -38,6 +45,8 @@ class LifeStyleLikeVC: UIViewController {
             case 0:
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "DoYouWorkVC") as! DoYouWorkVC
+                UserDefaults.standard.set(self.lifestyleSt, forKey: DefaultKeys.shared.lifestyle)
+                UserDefaults.standard.synchronize()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
             default:
@@ -76,6 +85,8 @@ extension LifeStyleLikeVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        let data = Constant.shared.LikeArr[indexPath.row]
+        lifestyleSt = data.titleSt
         tableView.reloadData() // Refresh table to update colors
     }
     

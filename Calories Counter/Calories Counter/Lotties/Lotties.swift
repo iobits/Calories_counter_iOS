@@ -12,5 +12,6 @@ class Lotties_Constant: NSObject{
     let cam = "Camera"
     let loading = "Loading"
     let photoCam = "Cam"
+    let wait = "wait"
    
 }

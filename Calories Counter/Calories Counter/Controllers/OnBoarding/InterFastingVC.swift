@@ -7,13 +7,20 @@
 
 import UIKit
 
-class InterFastingVC: UIViewController {
+class InterFastingCell: UITableViewCell{
     
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var titleLbl: UILabel!
+}
+
+class InterFastingVC: UIViewController {
     
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var nextView: UIView!
     
     var selectedIndex: Int = 0
+    var arr = ["Yeah, I’m doing it now", "Yeah, tried it, but not anymore", "No, but sounds cool", "Nope, no idea what that is", "Nope, and I,m not interested"]
+    var intermittentFastingSt = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         tblView.delegate = self
@@ -21,10 +28,14 @@ class InterFastingVC: UIViewController {
         tblView.separatorStyle = .none
         tblView.showsVerticalScrollIndicator = false
         tapGesture()
+        intermittentFastingSt = arr[0]
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         nextView.layer.cornerRadius = 25.0
+    }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     func tapGesture() {
         [nextView].addTapGesture { index, tappedView in
@@ -33,6 +44,9 @@ class InterFastingVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "FirstLastMealVC") as! FirstLastMealVC
                 vc.modalPresentationStyle = .fullScreen
+                UserDefaults.standard.set(self.intermittentFastingSt, forKey: DefaultKeys.shared.intermittentFasting)
+                UserDefaults.standard.synchronize()
+                
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")
@@ -43,13 +57,15 @@ class InterFastingVC: UIViewController {
 
 extension InterFastingVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return arr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DietryRestictionCell") as! DietryRestictionCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InterFastingCell") as! InterFastingCell
         // Set background based on selected index
         cell.selectionStyle = .none
+        let data = arr[indexPath.row]
+        cell.titleLbl.text = data
         cell.mainView.layer.cornerRadius = 25
         if indexPath.row == selectedIndex {
             cell.mainView.layer.borderWidth = 2
@@ -66,6 +82,7 @@ extension InterFastingVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        intermittentFastingSt = arr[indexPath.row]
         tableView.reloadData() // Refresh table to update colors
     }
     

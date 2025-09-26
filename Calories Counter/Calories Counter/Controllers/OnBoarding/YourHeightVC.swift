@@ -16,7 +16,7 @@ class YourHeightVC: UIViewController {
     
     var selectedHeight: Int = 180
     var selectedUnit: String = "cm"
-    
+    var heightStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         pickerView.delegate = self
@@ -25,8 +25,16 @@ class YourHeightVC: UIViewController {
         // Default selection -> 180 cm
         if let index = heights.firstIndex(of: 180) {
             pickerView.selectRow(index, inComponent: 0, animated: false)
+            selectedHeight = heights[index] // assign default height
         }
         pickerView.selectRow(0, inComponent: 1, animated: false)
+        selectedUnit = units[0] // assign default unit
+        
+        // 🔹 Assign heightStr and healthData when controller loads
+        heightStr = "\(selectedHeight) \(selectedUnit)"
+        UserDefaults.standard.set(self.heightStr, forKey: DefaultKeys.shared.height)
+        UserDefaults.standard.synchronize()
+        print("✅ Default Height: \(heightStr)")
         tapGesture()
     }
     
@@ -45,6 +53,9 @@ class YourHeightVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "YourGoalsVC") as! YourGoalsVC
                 vc.modalPresentationStyle = .fullScreen
+                
+                UserDefaults.standard.set(self.heightStr, forKey: DefaultKeys.shared.height)
+                UserDefaults.standard.synchronize()
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")
@@ -91,5 +102,6 @@ extension YourHeightVC: UIPickerViewDelegate, UIPickerViewDataSource {
             selectedUnit = units[row]
         }
         print("📏 Selected Height: \(selectedHeight) \(selectedUnit)")
+        heightStr = "\(selectedHeight) \(selectedUnit)"
     }
 }

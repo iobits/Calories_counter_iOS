@@ -6,21 +6,25 @@
 //
 
 import UIKit
+import CoreData
 
 class MyMealCellTop: UICollectionViewCell{
     
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                bgView.backgroundColor = UIColor(hex: "#FFE98B").withAlphaComponent(1.0)
-                titleLabel.textColor = .black
-            } else {
-                bgView.backgroundColor =  UIColor(hex: "#FFE98B").withAlphaComponent(0.4)
-                titleLabel.textColor = .darkGray
-            }
+    func configureCell(title: String, isSelected: Bool) {
+        titleLabel.text = title
+        bgView.layer.cornerRadius = 15
+       
+        if isSelected {
+            // ✅ Selected cell = RED
+            bgView.backgroundColor = UIColor(hex: "#FFE98B").withAlphaComponent(1.0)
+            titleLabel.textColor = .black
+        } else {
+            // ✅ Unselected cells = YELLOW
+            bgView.backgroundColor = UIColor(hex: "#FFE98B").withAlphaComponent(0.4)
+            titleLabel.textColor = .darkGray
         }
     }
 }
@@ -28,18 +32,41 @@ class MyMealCellTop: UICollectionViewCell{
 class MyMealCell: UICollectionViewCell{
     
     @IBOutlet weak var bgView: UIView!
-    
+    @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var mealTypeLbl: UILabel!
+    @IBOutlet weak var mealName: UILabel!
+    @IBOutlet weak var caloriesLbl: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
 }
 
 class MyMealsVC: UIViewController {
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var topCollcetionView: UICollectionView!
     @IBOutlet weak var noDatImg: UIImageView!
     
-    let categories = ["Lunch", "Breakfast", "Snacks", "Dinner"]
+    let categories = ["Breakfast", "Lunch", "Snacks", "Dinner"]
+    var selectedCategoryIndex: Int = 0
+    // CoreData arrays
+    var lunchArr: [Lunch] = []
+    var snackArr: [Snacks] = []
+    var dinnerArr: [Dinner] = []
+    var breakFastArr: [Breakfast] = []
+    
+    // Active array (for selected category)
+    var currentMeals: [NSManagedObject] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Fetch CoreData arrays
+        lunchArr = CoreDataManager.shared.fetchLunch() ?? []
+        snackArr = CoreDataManager.shared.fetchSnacks() ?? []
+        dinnerArr = CoreDataManager.shared.fetchDinner() ?? []
+        breakFastArr = CoreDataManager.shared.fetchBreakfast() ?? []
+        
+        // Default selection = Breakfast
+        currentMeals = breakFastArr
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -48,14 +75,6 @@ class MyMealsVC: UIViewController {
         
         collectionView.showsVerticalScrollIndicator = false
         topCollcetionView.showsHorizontalScrollIndicator = false
-        
-        DispatchQueue.main.async {
-            let firstIndex = IndexPath(item: 0, section: 0)
-            self.topCollcetionView.selectItem(at: firstIndex, animated: false, scrollPosition: [])
-            if let firstCell = self.topCollcetionView.cellForItem(at: firstIndex) as? MyMealCellTop {
-                firstCell.isSelected = true
-            }
-        }
     }
     
     
@@ -73,7 +92,7 @@ extension MyMealsVC: UICollectionViewDelegate, UICollectionViewDataSource{
         if collectionView == topCollcetionView {
             return categories.count
         } else {
-            return 20
+            return currentMeals.count
         }
     }
     
@@ -81,26 +100,81 @@ extension MyMealsVC: UICollectionViewDelegate, UICollectionViewDataSource{
         
         if collectionView == topCollcetionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyMealCellTop", for: indexPath) as! MyMealCellTop
-            cell.bgView.layer.cornerRadius = 15
-            cell.titleLabel.text = categories[indexPath.item]
-            
-            // ✅ Properly restore selection state
-            // ✅ Properly restore selection state
-            if cell.isSelected {
-                cell.bgView.backgroundColor = UIColor(hex: "#FFE98B").withAlphaComponent(1.0) // solid
-                cell.titleLabel.textColor = .black
-            } else {
-                cell.bgView.backgroundColor = UIColor(hex: "#FFE98B").withAlphaComponent(0.4) // lighter (40% opacity)
-                cell.titleLabel.textColor = .darkGray
-            }
-
+            let isSelected = indexPath.item == selectedCategoryIndex
+            cell.configureCell(title: categories[indexPath.item], isSelected: isSelected)
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyMealCell", for: indexPath) as! MyMealCell
             cell.bgView.layer.cornerRadius = 15.0
+            cell.imgView.layer.cornerRadius = cell.imgView.frame.size.width/2
+            cell.imgView.clipsToBounds = true
+            
+            if let meal = currentMeals[indexPath.item] as? Breakfast {
+                cell.mealTypeLbl.text = meal.mealType
+                cell.mealName.text = meal.name
+                cell.caloriesLbl.text = meal.calories
+                if let data = meal.imageData {
+                    cell.imgView.image = UIImage(data: data)   // ✅ convert Data -> UIImage
+                }
+                if let date = meal.date { cell.dateLbl.text = formatDate(date) }
+            } else if let meal = currentMeals[indexPath.item] as? Lunch {
+                cell.mealTypeLbl.text = meal.mealType
+                cell.mealName.text = meal.name
+                cell.caloriesLbl.text = meal.calories
+                if let data = meal.imageData {
+                    cell.imgView.image = UIImage(data: data)   // ✅ convert Data -> UIImage
+                }
+                if let date = meal.date { cell.dateLbl.text = formatDate(date) }
+            } else if let meal = currentMeals[indexPath.item] as? Snacks {
+                cell.mealTypeLbl.text = meal.mealType
+                cell.mealName.text = meal.name
+                cell.caloriesLbl.text = meal.calories
+                if let data = meal.imageData {
+                    cell.imgView.image = UIImage(data: data)   // ✅ convert Data -> UIImage
+                }
+                if let date = meal.date { cell.dateLbl.text = formatDate(date) }
+            } else if let meal = currentMeals[indexPath.item] as? Dinner {
+                cell.mealTypeLbl.text = meal.mealType
+                cell.mealName.text = meal.name
+                cell.caloriesLbl.text = meal.calories
+                if let data = meal.imageData {
+                    cell.imgView.image = UIImage(data: data)   // ✅ convert Data -> UIImage
+                }
+                if let date = meal.date { cell.dateLbl.text = formatDate(date) }
+            }
             return cell
         }
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == topCollcetionView {
+            selectedCategoryIndex = indexPath.item   // 👉 Save selected index
+            
+            switch categories[indexPath.item] {
+            case "Breakfast":
+                currentMeals = breakFastArr
+            case "Lunch":
+                currentMeals = lunchArr
+            case "Snacks":
+                currentMeals = snackArr
+            case "Dinner":
+                currentMeals = dinnerArr
+            default:
+                currentMeals = []
+            }
+            
+            // ✅ Refresh both collections
+            topCollcetionView.reloadData()
+            self.collectionView.reloadData()
+        }
+    }
+        
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM, yyyy"   // 👉 Example: 01 Aug, 2025
+        return formatter.string(from: date)
+    }
+
 }
 
 // extention for UICollectionViewDelegateFlowLayout

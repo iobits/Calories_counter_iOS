@@ -19,16 +19,19 @@ class BeforeCalriesVC: UIViewController {
     @IBOutlet weak var lbl2: UILabel!
     @IBOutlet weak var lbl3: UILabel!
     
-    var healthData = FullUserHealthData()
     var countedStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("date: -", healthData.birthDate)
         tapGesture()
+        self.countedStr = self.lbl2.text ?? ""
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        [nextView, view1, view2, view3].viewsCornerRadius(25)
+        [nextView].viewsCornerRadius(25)
+        HelperFun.shared.selectView(from: [self.view1, self.view2, self.view3], selectedView: self.view2, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
+    }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     func tapGesture() {
         [nextView, view1, view2, view3].addTapGesture { index, tappedView in
@@ -36,6 +39,8 @@ class BeforeCalriesVC: UIViewController {
             case 0:
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "AcheivePlanVC") as! AcheivePlanVC
+                UserDefaults.standard.set(self.countedStr, forKey: DefaultKeys.shared.countCalBefore)
+                UserDefaults.standard.synchronize()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
             case 1:

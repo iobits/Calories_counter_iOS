@@ -2,6 +2,27 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Dinner+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Dinner+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Snacks+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Snacks+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Lunch+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Lunch+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Breakfast+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:Calories Counter.xcodeproj">
    </FileRef>
    <FileRef

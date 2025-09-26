@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-class CamVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class CamVC: UIViewController {
     
     @IBOutlet weak var camView: UIView!
     @IBOutlet weak var camLottieView: UIView!
@@ -19,6 +19,7 @@ class CamVC: UIViewController, UIImagePickerControllerDelegate & UINavigationCon
     var movieOutput: AVCaptureMovieFileOutput!
     var currentDevice: AVCaptureDevice?
     var isTorchOn: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCamera()
@@ -180,7 +181,31 @@ extension CamVC: AVCapturePhotoCaptureDelegate {
             return
         }
         
-        // Send image to next VC
-       //sentimgToNextVC(img: image)
+        print("📸 Photo Captured Successfully")
+        sentimgToNextVC(img: image)  // ✅ Ab captured image bhi next VC me jayegi
+    }
+}
+
+
+extension CamVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        
+        if let selectedImage = info[.originalImage] as? UIImage {
+            print("Image Selected")
+            sentimgToNextVC(img: selectedImage)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func sentimgToNextVC(img: UIImage){
+        let vc = storyboard?.instantiateViewController(withIdentifier: "CrpingVc") as! CrpingVc
+        vc.modalPresentationStyle = .fullScreen
+        vc.getImg = img
+        present(vc, animated: false)
     }
 }

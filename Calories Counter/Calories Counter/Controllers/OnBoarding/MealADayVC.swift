@@ -12,13 +12,11 @@ class MealADayVC: UIViewController {
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var nextView: UIView!
     
-    
     // Picker values
     let meals = ["1", "2", "3", "4", "5"]
-    
     // Selected value
     var selectedMeal: String = "1"
-    
+    var mealInADaySt = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         pickerView.delegate = self
@@ -30,6 +28,7 @@ class MealADayVC: UIViewController {
             selectedMeal = meals[index]
         }
         tapGesture()
+        mealInADaySt = meals[2]
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,6 +46,9 @@ class MealADayVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "InterFastingVC") as! InterFastingVC
                 vc.modalPresentationStyle = .fullScreen
+                UserDefaults.standard.set(self.mealInADaySt, forKey: DefaultKeys.shared.mealInADay)
+                UserDefaults.standard.synchronize()
+                
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")
@@ -73,5 +75,6 @@ class MealADayVC: UIViewController {
        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
            selectedMeal = meals[row]
            print("🍽 Selected Meals: \(selectedMeal)")
+           mealInADaySt = selectedMeal
        }
    }

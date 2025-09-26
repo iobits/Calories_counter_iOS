@@ -39,5 +39,36 @@ class HelperFun: NSObject{
         }
     }
     
+    func viewsConerRadius(for views: [UIView], radius: CGFloat, borderColor: UIColor? = nil, borderWidth: CGFloat = 1.0) {
+        for view in views {
+            view.layer.cornerRadius = radius
+            view.clipsToBounds = true
+            
+            if let color = borderColor {
+                view.layer.borderColor = color.cgColor
+                view.layer.borderWidth = borderWidth
+            }
+        }
+    }
+    func adsCornerradius(for views: [UIView], radius: CGFloat, borderColor: UIColor? = nil, borderWidth: CGFloat = 1.0) {
+        for view in views {
+            view.layer.cornerRadius = radius
+            view.clipsToBounds = true
+            
+            if let color = borderColor {
+                view.layer.borderColor = color.cgColor
+                view.layer.borderWidth = borderWidth
+            }
+        }
+    }
     
+    // Preprocess image: resize for better detection
+    func preprocessImage(_ image: UIImage) -> UIImage {
+        let targetSize = CGSize(width: 640, height: 640)
+        UIGraphicsBeginImageContext(targetSize)
+        image.draw(in: CGRect(origin: .zero, size: targetSize))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizedImage ?? image
+    }
 }

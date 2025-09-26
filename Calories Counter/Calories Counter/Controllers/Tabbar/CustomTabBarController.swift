@@ -11,7 +11,7 @@ import UIKit
 class CustomTabBar: UITabBar {
     private let customHeight: CGFloat = 75
     private let bottomMargin: CGFloat = 20
-    private let sideMargin: CGFloat = 5
+    private let sideMargin: CGFloat = 10
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         var size = super.sizeThatFits(size)

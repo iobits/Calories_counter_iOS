@@ -16,12 +16,9 @@ class HowOldVC: UIViewController {
     let days = Array(1...31)
     let years = Array((1900...Calendar.current.component(.year, from: Date())).reversed()) // Proper array
     var dateSt = ""
-    var healthData = FullUserHealthData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("👉 Received Gender: \(healthData.gender)")
         
         datePickerView.delegate = self
         datePickerView.dataSource = self
@@ -58,8 +55,8 @@ class HowOldVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "BeforeCalriesVC") as! BeforeCalriesVC
                 vc.modalPresentationStyle = .fullScreen
-                self.healthData.birthDate = self.dateSt
-                vc.healthData = self.healthData
+                UserDefaults.standard.set(self.dateSt, forKey: DefaultKeys.shared.birthDate)
+                UserDefaults.standard.synchronize()
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")

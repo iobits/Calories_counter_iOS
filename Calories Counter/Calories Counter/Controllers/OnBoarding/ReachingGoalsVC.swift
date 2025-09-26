@@ -19,8 +19,8 @@ class ReachingGoalsVC: UIViewController {
     
     @IBOutlet weak var goalTblView: UITableView!
     @IBOutlet weak var nextView: UIView!
-    
     var selectedIndex: Int = 0
+    var obstaclesStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         goalTblView.delegate = self
@@ -28,10 +28,15 @@ class ReachingGoalsVC: UIViewController {
         goalTblView.separatorColor = .clear
         goalTblView.showsVerticalScrollIndicator = false
         tapGesture()
+        let data = Constant.shared.reachingGoalsArra[0].titleSt
+        obstaclesStr = data
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         nextView.layer.cornerRadius = 25
+    }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     func tapGesture() {
         [nextView].addTapGesture { index, tappedView in
@@ -40,6 +45,8 @@ class ReachingGoalsVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "LifeStyleLikeVC") as! LifeStyleLikeVC
                 vc.modalPresentationStyle = .fullScreen
+                UserDefaults.standard.set(self.obstaclesStr, forKey: DefaultKeys.shared.obstacles)
+                UserDefaults.standard.synchronize()
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")
@@ -78,6 +85,8 @@ extension ReachingGoalsVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        let data = Constant.shared.reachingGoalsArra[indexPath.row]
+        obstaclesStr = data.titleSt
         tableView.reloadData() // Refresh table to update colors
     }
     

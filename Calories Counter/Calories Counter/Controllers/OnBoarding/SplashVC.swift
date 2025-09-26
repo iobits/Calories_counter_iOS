@@ -28,8 +28,12 @@ class SplashVC: UIViewController {
         }
     }
     func navigation(){
-        let vc = storyboard?.instantiateViewController(withIdentifier: "GenderVcOb1") as! GenderVcOb1
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false)
+        let tabBarVC = CustomTabBarController()
+        tabBarVC.modalPresentationStyle = .fullScreen
+        self.present(tabBarVC, animated: true, completion: nil)
+        
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "GenderVcOb1") as! GenderVcOb1
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: false)
     }
 }

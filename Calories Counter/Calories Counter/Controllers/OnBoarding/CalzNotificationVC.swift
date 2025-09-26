@@ -21,6 +21,9 @@ class CalzNotificationVC: UIViewController {
         topView.layer.cornerRadius = 10.0
         notificationView.layer.cornerRadius = 25.0
     }
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
     func tapGesture() {
         [notificationView].addTapGesture { index, tappedView in
             switch index {

@@ -17,18 +17,23 @@ class TargetWeightVC: UIViewController {
     
     var selectedWeight: Int = 60
     var selectedUnit: String = "kg"
-    
+    var targerWeightStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGesture()
         pickerView.delegate = self
         pickerView.dataSource = self
-        
         // Default selection: 60 kg
         if let index = weights.firstIndex(of: 60) {
             pickerView.selectRow(index, inComponent: 0, animated: false)
+            selectedWeight = weights[index] // assign default weight
         }
         pickerView.selectRow(0, inComponent: 1, animated: false)
+        selectedUnit = units[0] // assign default unit
+        
+        // 🔹 Set default string when controller loads
+        self.targerWeightStr = "\(selectedWeight) \(selectedUnit)"
+        print("✅ Default Target Weight: \(targerWeightStr)")
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -46,6 +51,8 @@ class TargetWeightVC: UIViewController {
                 print("👉 Next View tapped")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "YourHeightVC") as! YourHeightVC
                 vc.modalPresentationStyle = .fullScreen
+                UserDefaults.standard.set(self.targerWeightStr, forKey: DefaultKeys.shared.targetWeight)
+                UserDefaults.standard.synchronize()
                 self.present(vc, animated: false)
             default:
                 print("Unknown View tapped")
@@ -92,5 +99,6 @@ extension TargetWeightVC: UIPickerViewDelegate, UIPickerViewDataSource {
             selectedUnit = units[row]
         }
         print("🔹 Selected: \(selectedWeight) \(selectedUnit)")
+        self.targerWeightStr = "\(selectedWeight) \(selectedUnit)"
     }
 }

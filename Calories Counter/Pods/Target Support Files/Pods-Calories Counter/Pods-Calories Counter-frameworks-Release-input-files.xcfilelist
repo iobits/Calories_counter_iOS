@@ -4,4 +4,5 @@ ${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework
 ${BUILT_PRODUCTS_DIR}/MKColorPicker/MKColorPicker.framework
 ${BUILT_PRODUCTS_DIR}/MKMagneticProgress/MKMagneticProgress.framework
 ${BUILT_PRODUCTS_DIR}/SwiftAlgorithms/Algorithms.framework
+${BUILT_PRODUCTS_DIR}/TOCropViewController/TOCropViewController.framework
 ${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework

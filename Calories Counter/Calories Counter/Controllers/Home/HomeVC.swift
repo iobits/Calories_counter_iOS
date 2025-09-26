@@ -62,7 +62,6 @@ class HomeVC: UIViewController {
     
     var consumedCalories: CGFloat = 1254
     var goalCalories: CGFloat = 2500
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,6 +74,7 @@ class HomeVC: UIViewController {
         dateView.isUserInteractionEnabled = true
         loadProgressViewData()
         profileNav()
+        UserDefaults.standard.set("breakfast", forKey: DefaultKeys.shared.mealType)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -82,6 +82,7 @@ class HomeVC: UIViewController {
         dateView.layer.cornerRadius = 20.0
         consumeView.layer.cornerRadius = 15.0
         [breakfastView, lunchView, snacksView, dinnerView].viewsCornerRadius(15)
+        HelperFun.shared.selectView(from: [self.breakfastView, self.lunchView, self.snacksView, self.dinnerView], selectedView: self.breakfastView, selectedHexColor: "#FFFCEE", cornerRadius: 15.0)
     }
     
     private func setupCollectionView() {
@@ -167,7 +168,7 @@ class HomeVC: UIViewController {
         present(alert, animated: true)
     }
     func profileNav() {
-        [profileView, viewAll].addTapGesture { index, tappedView in
+        [profileView, viewAll, breakfastView, lunchView, snacksView, dinnerView].addTapGesture { index, tappedView in
             switch index {
             case 0:
                 print("👉 Next View tapped")
@@ -176,14 +177,32 @@ class HomeVC: UIViewController {
                 self.present(vc, animated: false)
             case 1:
                 print("view all")
-                
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyMealsVC") as! MyMealsVC
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: false)
                 
+            case 2:
+                print("breakfast")
+                UserDefaults.standard.set("breakfast", forKey: DefaultKeys.shared.mealType)
+                HelperFun.shared.selectView(from: [self.breakfastView, self.lunchView, self.snacksView, self.dinnerView], selectedView: self.breakfastView, selectedHexColor: "#FFFCEE", cornerRadius: 15.0)
+            case 3:
+                print("lunch")
+                UserDefaults.standard.set("lunch", forKey: DefaultKeys.shared.mealType)
+                HelperFun.shared.selectView(from: [self.breakfastView, self.lunchView, self.snacksView, self.dinnerView], selectedView: self.lunchView, selectedHexColor: "#FFFCEE", cornerRadius: 15.0)
+            case 4:
+                print("snacks")
+                UserDefaults.standard.set("snacks", forKey: DefaultKeys.shared.mealType)
+                HelperFun.shared.selectView(from: [self.breakfastView, self.lunchView, self.snacksView, self.dinnerView], selectedView: self.snacksView, selectedHexColor: "#FFFCEE", cornerRadius: 15.0)
+            case 5:
+                print("Dinners")
+                UserDefaults.standard.set("Dinners", forKey: DefaultKeys.shared.mealType)
+                HelperFun.shared.selectView(from: [self.breakfastView, self.lunchView, self.snacksView, self.dinnerView], selectedView: self.dinnerView, selectedHexColor: "#FFFCEE", cornerRadius: 15.0)
+                
             default:
                 print("Unknown View tapped")
             }
+            
+            UserDefaults.standard.synchronize()
         }
     }
 }

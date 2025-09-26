@@ -12,29 +12,41 @@ class OnWeekendCell: UITableViewCell{
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var titleLbl: UILabel!
-    
 }
 
 class OnWeekendVC: UIViewController {
 
     @IBOutlet weak var nextView: UIView!
     var selectedIndex: Int = 0
+    var weekendEatingStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGesture()
+        weekendEatingStr = Constant.shared.bitMoreArr[0].titleSt
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         nextView.layer.cornerRadius = 25.0
     }
+    
+    
+    @IBAction func backBtn(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func tapGesture() {
         [nextView].addTapGesture { index, tappedView in
             switch index {
             case 0:
                 print("👉 Next View tapped")
-                let tabBarVC = CustomTabBarController()
-                tabBarVC.modalPresentationStyle = .fullScreen
-                self.present(tabBarVC, animated: true, completion: nil)
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ProgressVC") as! ProgressVC
+                vc.modalPresentationStyle = .fullScreen
+                UserDefaults.standard.set(self.weekendEatingStr, forKey: DefaultKeys.shared.weekendEating)
+                UserDefaults.standard.synchronize()
+                
+                self.present(vc, animated: false)
+                
             default:
                 print("Unknown View tapped")
             }
@@ -46,14 +58,16 @@ class OnWeekendVC: UIViewController {
 extension OnWeekendVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return Constant.shared.bitMoreArr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OnWeekendCell", for: indexPath) as! OnWeekendCell
+        let data = Constant.shared.bitMoreArr[indexPath.row]
         cell.selectionStyle = .none
         cell.mainView.layer.cornerRadius = 25
-      
+        cell.imgView.image = UIImage(named: data.img)
+        cell.titleLbl.text = data.titleSt
         if indexPath.row == selectedIndex {
             cell.mainView.layer.borderWidth = 2
             cell.mainView.layer.borderColor = UIColor.systemYellow.cgColor
@@ -70,6 +84,7 @@ extension OnWeekendVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
+        weekendEatingStr = Constant.shared.bitMoreArr[indexPath.row].titleSt
         tableView.reloadData() // Refresh table to update colors
     }
     

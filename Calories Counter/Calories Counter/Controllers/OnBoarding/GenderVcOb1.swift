@@ -13,20 +13,16 @@ class GenderVcOb1: UIViewController {
     @IBOutlet weak var maleView: UIView!
     @IBOutlet weak var femaleView: UIView!
     @IBOutlet weak var notPreferView: UIView!
-    
-    var healthData = FullUserHealthData()
 
     var genderType = "Male"
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGesture()
-        // initialize before using
-        healthData = FullUserHealthData()
-
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        [nextView, maleView, femaleView, notPreferView].viewsCornerRadius(25)
+        [nextView].viewsCornerRadius(25)
+        HelperFun.shared.selectView(from: [self.maleView, self.femaleView, self.notPreferView], selectedView: self.maleView, selectedHexColor: "#FFE98B", cornerRadius: 25.0)
     }
     func tapGesture() {
         [nextView, maleView, femaleView, notPreferView].addTapGesture { index, tappedView in
@@ -59,8 +55,8 @@ class GenderVcOb1: UIViewController {
     func nextVc() {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "HowOldVC") as! HowOldVC
         vc.modalPresentationStyle = .fullScreen
-        healthData.gender = genderType
-        vc.healthData = healthData 
+        UserDefaults.standard.set(genderType, forKey: DefaultKeys.shared.gender)
+        UserDefaults.standard.synchronize()
         self.present(vc, animated: false)
     }
 

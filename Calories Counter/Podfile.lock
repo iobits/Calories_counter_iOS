@@ -8,6 +8,7 @@ PODS:
   - MKColorPicker (1.2)
   - MKMagneticProgress (1.4)
   - SwiftAlgorithms (1.0.0)
+  - TOCropViewController (2.7.4)
 
 DEPENDENCIES:
   - Charts
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - lottie-ios
   - MKColorPicker
   - MKMagneticProgress
+  - TOCropViewController
 
 SPEC REPOS:
   trunk:
@@ -24,6 +26,7 @@ SPEC REPOS:
     - MKColorPicker
     - MKMagneticProgress
     - SwiftAlgorithms
+    - TOCropViewController
 
 SPEC CHECKSUMS:
   Charts: ce0768268078eee0336f122c3c4ca248e4e204c5
@@ -32,7 +35,8 @@ SPEC CHECKSUMS:
   MKColorPicker: 8998b2ab977e4f240fdf254db27a18b810da3cfc
   MKMagneticProgress: 006b8c763d62986661bcde03794a3dcf56cd084a
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
+  TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
 
-PODFILE CHECKSUM: 66b2c47151005aceef77f0d96129cf7ac135349f
+PODFILE CHECKSUM: 97d8016b280a6e26de3b5d1dcd816f37dbd30e32
 
 COCOAPODS: 1.16.2
